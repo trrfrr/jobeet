@@ -3,7 +3,7 @@ services:
     mysql:
         image: mysql:5.7
         container_name: jobeet-mysql
-        working_dir: /application
+        working_dir: /application/
         volumes:
             - .:/application
         environment:

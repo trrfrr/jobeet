@@ -32,6 +32,7 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
         $jobSensioLabs->setEmail('job@example.com');
         $jobSensioLabs->setExpiresAt(new \DateTime('+30 days'));
         $jobSensioLabs->setCreatedAt(new \DateTime('+30 days'));
+        $jobSensioLabs->setUpdatedAt(new \DateTime('+30 days'));
 
 
         $jobExtremeSensio = new Jobs();
