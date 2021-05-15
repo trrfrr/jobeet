@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Category;
+use App\Entity\Jobs;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,6 +20,32 @@ class CategoryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Category::class);
     }
+
+    /**
+     * @return Category[] returns categorys with active jobs
+     */
+    public function findWithActiveJobs()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->innerJoin('c.jobs', 'j')
+            ->where('j.expiresAt > :date')
+            ->setParameter('date', new \DateTime())
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    /**
+     * @return Jobs[]|ArrayCollection
+     */
+    public function getActiveJobs()
+    {
+        return $this->jobs->filter(function(Jobs $job) {
+            return $job->getExpiresAt() > new \DateTime();
+        });
+    }
+
 
     // /**
     //  * @return Category[] Returns an array of Category objects
