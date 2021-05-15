@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\JobsRepository;
 use App\Entity\Jobs;
+
 class JobController extends AbstractController
 {
     /**
@@ -23,12 +25,11 @@ class JobController extends AbstractController
 
 
     /**
-     * @Route("/{id}", name="job")
+     * @Route("/job/{id}", name="job.show")
      */
-    public function job(Jobs $job): Response
+    public function show(Jobs $job): Response
     {
-        //$jobs = $jobsRepository->findOneBy();
-        return $this->render('job/index.html.twig', [
+        return $this->render('job/show.html.twig', [
             'controller_name' => 'JobController',
             'job' => $job,
         ]);
