@@ -6,6 +6,8 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use PhpParser\Node\Scalar\String_;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -18,6 +20,13 @@ class Category
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(type="string", length=128,unique=true)
+     */
+    private $slug;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -33,6 +42,8 @@ class Category
      * @ORM\ManyToMany(targetEntity=Affiliates::class, inversedBy="categories")
      */
     private $affiliates;
+
+
 
     public function __construct()
     {
@@ -55,6 +66,22 @@ class Category
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug():?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug($slug): void
+    {
+        $this->slug = $slug;
     }
 
     /**

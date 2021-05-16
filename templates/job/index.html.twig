@@ -17,6 +17,9 @@
         }
     </style>
     <div class="container ">
+        {% if not categories %}
+            <h1 class="text-white">0 jobs found for the moment</h1>
+        {% endif %}
         {% for category in categories %}
             <div class="card p-5 mt-5 shadow p-3 mb-5 bg-white rounded border-top">
 
