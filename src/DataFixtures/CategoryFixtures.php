@@ -19,15 +19,20 @@ class CategoryFixtures extends Fixture
     {
         $designCategory = new Category();
         $designCategory->setName('Design');
+        $designCategory->setSlug('design');
 
         $programmingCategory = new Category();
         $programmingCategory->setName('Programming');
+        $programmingCategory->setSlug('programming');
+
 
         $managerCategory = new Category();
         $managerCategory->setName('Manager');
+        $managerCategory->setSlug('manager');
 
         $administratorCategory = new Category();
         $administratorCategory->setName('Administrator');
+        $administratorCategory->setSlug('administrator');
 
         $manager->persist($designCategory);
         $manager->persist($programmingCategory);

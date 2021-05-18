@@ -23,8 +23,8 @@
         {% for category in categories %}
             <div class="card p-5 mt-5 shadow p-3 mb-5 bg-white rounded border-top">
 
-                <h1 class="display-4 text-primary">{{ category.name }}  </h1>
-                <table class="table shadow p-3 mb-5 bg-white rounded">
+                <h1 class="display-4 text-primary">  <a href="{{ path('category.show', {slug: category.slug}) }}">{{ category.name }} </a> </h1>
+                <table class="table shadow p-3 mb-5 bg-white  text-center rounded">
                     <thead class="thead-dark">
                     <tr>
                         <th>City</th>
