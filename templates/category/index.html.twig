@@ -8,8 +8,13 @@
     <div class="container ">
         <div class="card p-5 mt-5 shadow p-3 mb-5 bg-white rounded border-top">
             <h1 class="display-4 text-primary">{{ category.name }}</h1>
-            {% include 'job/table.html.twig' with {'jobs': category.jobs |slice(0, max_jobs_on_homepage)} only %}
+            {% include 'job/table.html.twig' with {'jobs':jobs |slice(0, max_jobs_on_homepage)} only %}
+            <div class="navigation ">
+                {{ knp_pagination_render(jobs) }}
+            </div>
         </div>
+
+
     </div>
 
 

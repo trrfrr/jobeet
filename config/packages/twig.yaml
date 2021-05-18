@@ -2,3 +2,6 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     globals:
         max_jobs_on_homepage: '%max_jobs_on_homepage%'
+knp_paginator:
+    template:
+        pagination: "@KnpPaginator/Pagination/twitter_bootstrap_v3_pagination.html.twig"

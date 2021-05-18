@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Jobs;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,6 +49,22 @@ class JobsRepository extends ServiceEntityRepository
             ->setParameter('date', new \DateTime())
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+
+    /**
+     * @param Category $category
+     *
+     * @return AbstractQuery
+     */
+    public function getPaginatedActiveJobsByCategoryQuery(Category $category) : AbstractQuery
+    {
+        return $this->createQueryBuilder('j')
+            ->where('j.Category = :category')
+            ->andWhere('j.expiresAt > :date')
+            ->setParameter('category', $category)
+            ->setParameter('date', new \DateTime())
+            ->getQuery();
     }
 
 
