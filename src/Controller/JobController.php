@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Form\JobType;
 use App\Repository\CategoryRepository;
 use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +15,7 @@ use App\Entity\Jobs;
 class JobController extends AbstractController
 {
     /**
-     * @Route("/", name="hompage")
+     * @Route("/", name="homepage")
      */
     public function index(JobsRepository $jobsRepository,CategoryRepository $categoryRepository): Response
     {
@@ -25,6 +26,17 @@ class JobController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/job/create", name="job.create")
+     */
+    public function create(): Response
+    {
+        $job=new Jobs();
+        $form=$this->createForm(JobType::class,$job);
+        return $this->render('job/create.html.twig', [
+            'form'=>$form->createView(),
+        ]);
+    }
 
     /**
      * @Route("/job/{id}", name="job.show")
@@ -36,6 +48,10 @@ class JobController extends AbstractController
             'job' => $job,
         ]);
     }
+
+
+
+
 }
 
 

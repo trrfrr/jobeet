@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+
+        <div class="card p-5 mt-5 shadow p-3 mb-5 bg-white rounded border-top  border-primary">
+            <h1>Job creation</h1>
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10 ">
+                    <button type="submit" class="btn btn-success">Create</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

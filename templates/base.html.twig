@@ -19,9 +19,12 @@
 </head>
 <body style="background-color:#184783 ">
 <nav class="navbar sticky-top navbar-dark" style="background-color:#212529">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="{{ path('homepage') }}">
         <strong>Jobeet</strong>
     </a>
+    <div class="d-flex">
+        <a class="btn btn-outline-primary text-white"  href="{{ path('job.create') }}">Post a Job</a>
+    </div>
 </nav>
 {% block body %}{% endblock %}
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
