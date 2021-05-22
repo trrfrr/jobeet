@@ -2,14 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Form\JobType;
 use App\Repository\CategoryRepository;
-use http\Env\Request;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\JobsRepository;
 use App\Entity\Jobs;
 
 class JobController extends AbstractController
@@ -17,7 +16,7 @@ class JobController extends AbstractController
     /**
      * @Route("/", name="homepage")
      */
-    public function index(JobsRepository $jobsRepository,CategoryRepository $categoryRepository): Response
+    public function index(CategoryRepository $categoryRepository): Response
     {
         $categories = $categoryRepository->findWithActiveJobs();
         return $this->render('job/index.html.twig', [
@@ -29,10 +28,16 @@ class JobController extends AbstractController
     /**
      * @Route("/job/create", name="job.create")
      */
-    public function create(): Response
+    public function create(Request $request,EntityManagerInterface $em): Response
     {
         $job=new Jobs();
         $form=$this->createForm(JobType::class,$job);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()&& $form->isValid()){
+            $em->persist($job);
+            $em-> flush();
+            return $this->redirectToRoute('homepage');
+        }
         return $this->render('job/create.html.twig', [
             'form'=>$form->createView(),
         ]);
@@ -48,11 +53,4 @@ class JobController extends AbstractController
             'job' => $job,
         ]);
     }
-
-
-
-
 }
-
-
-
