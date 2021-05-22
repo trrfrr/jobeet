@@ -3,9 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\JobsRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\Date;
-
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * @ORM\Entity(repositoryClass=JobsRepository::class)
  */
@@ -140,11 +141,18 @@ class Jobs
         return $this;
     }
 
+    /**
+     * @return string|null|UploadedFile
+     */
     public function getLogo(): ?string
     {
         return $this->logo;
     }
 
+    /**
+     * @param string|null|UploadedFile $logo
+     * @return self
+     */
     public function setLogo(?string $logo): self
     {
         $this->logo = $logo;
@@ -260,36 +268,36 @@ class Jobs
         return $this;
     }
 
-    public function getExpiresAt(): ?\DateTimeInterface
+    public function getExpiresAt(): ?DateTimeInterface
     {
         return $this->expiresAt;
     }
 
-    public function setExpiresAt(\DateTimeInterface $expiresAt): self
+    public function setExpiresAt(DateTimeInterface $expiresAt): self
     {
         $this->expiresAt = $expiresAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DatetimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(DatetimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DatetimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DatetimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -311,8 +319,8 @@ class Jobs
      * @ORM\PrePersist()
      */
     public function prePersist(){
-        $this->createdAt=new \DateTime();
-        $this->updatedAt=new \DateTime();
+        $this->createdAt=new Datetime();
+        $this->updatedAt=new Datetime();
         if (!$this->expiresAt) {
             $this->expiresAt = (clone $this->createdAt)->modify('+30 days');
         }
@@ -321,6 +329,6 @@ class Jobs
      * @ORM\PreUpdate()
      */
     public function preUpdate(){
-        $this->updatedAt=new \DateTime();
+        $this->updatedAt=new Datetime();
     }
 }

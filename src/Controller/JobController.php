@@ -28,18 +28,19 @@ class JobController extends AbstractController
     /**
      * @Route("/job/create", name="job.create")
      */
-    public function create(Request $request,EntityManagerInterface $em): Response
+    public function create(Request $request, EntityManagerInterface $em): Response
     {
-        $job=new Jobs();
-        $form=$this->createForm(JobType::class,$job);
+        $job = new Jobs();
+        $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
-        if ($form->isSubmitted()&& $form->isValid()){
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($job);
-            $em-> flush();
+            $em->flush();
             return $this->redirectToRoute('homepage');
         }
         return $this->render('job/create.html.twig', [
-            'form'=>$form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
