@@ -28,67 +28,73 @@ class JobType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type', ChoiceType::class, ['choices' => array_combine(Jobs::TYPES, Jobs::TYPES), 'expanded' => true,
-                    'constraints' => [
-                        new NotBlank()
-                    ]]
-            )
+            ->add('type', ChoiceType::class, [
+                'choices' => array_combine(Jobs::TYPES, Jobs::TYPES),
+                'expanded' => true,
+                'constraints' => [
+                    new NotBlank(),
+                ]
+            ])
             ->add('company', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
-                    new Length(['max' => 255])
-                ]
-            ])
-            ->add('logo', FileType::class,
-                [
-                    'constraints' => [
-                     new Image(),
-                    ]
-                ]
-            )
-            ->add('url', UrlType::class, [
-                'constraints' => [
-                    'required' => false,
                     new Length(['max' => 255]),
                 ]
             ])
-            ->add('position', TextType::class,
-                [
-                    'constraints' => [
-                        new NotBlank(),
-                        new Length(['max' => 255]),
-                    ]
-                ])
-            ->add('location', TextType::class,
-                [
-                    'constraints' => [
-                        new NotBlank(),
-                        new Length(['max' => 255]),
-                    ]
-                ])
+            ->add('logo', FileType::class, [
+                'required' => false,
+                'constraints' => [
+                    new Image(),
+                ]
+            ])
+            ->add('url', UrlType::class, [
+                'required' => false,
+                'constraints' => [
+                    new Length(['max' => 255]),
+                ]
+            ])
+            ->add('position', TextType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['max' => 255]),
+                ]
+            ])
+            ->add('location', TextType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['max' => 255]),
+                ]
+            ])
             ->add('description', TextareaType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ]
             ])
             ->add('howToApply', TextType::class, [
+                'label' => 'How to apply?',
                 'constraints' => [
                     new NotBlank(),
-                ]])
+                ]
+            ])
             ->add('public', ChoiceType::class, [
-                'choices' => [
+                'choices'  => [
                     'Yes' => true,
                     'No' => false,
-                    'constraints' => [
-                        new NotNull(),
-                    ]
                 ],
-                'label' => 'Public?'
-            ])
-            ->add('activated', ChoiceType::class, ['choices' => ['Yes' => true, 'No' => false],
+                'label' => 'Public?',
                 'constraints' => [
                     new NotNull(),
-                ]])
+                ]
+            ])
+            ->add('activated', ChoiceType::class, [
+                'choices'  => [
+                    'Yes' => true,
+                    'No' => false,
+                ],
+                'constraints' => [
+                    new NotNull(),
+                ]
+            ])
             ->add('email', EmailType::class, [
                 'constraints' => [
                     new NotBlank(),
