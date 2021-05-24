@@ -30,9 +30,6 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
         $jobSensioLabs->setActivated(true);
         $jobSensioLabs->setToken('job_sensio_labs');
         $jobSensioLabs->setEmail('job@example.com');
-        $jobSensioLabs->setExpiresAt(new \DateTime('+30 days'));
-        $jobSensioLabs->setCreatedAt(new \DateTime('+30 days'));
-        $jobSensioLabs->setUpdatedAt(new \DateTime('+30 days'));
 
 
         $jobExtremeSensio = new Jobs();
@@ -49,9 +46,6 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
         $jobExtremeSensio->setActivated(true);
         $jobExtremeSensio->setToken('job_extreme_sensio');
         $jobExtremeSensio->setEmail('job@example.com');
-        $jobExtremeSensio->setExpiresAt(new \DateTime('+30 days'));
-        $jobExtremeSensio->setCreatedAt(new \DateTime('+30 days'));
-        $jobExtremeSensio->setUpdatedAt(new \DateTime('+30 days'));
 
 
 
@@ -93,7 +87,6 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
             $job->setActivated(true);
             $job->setToken('job_-' . $i);
             $job->setEmail('job@example.com');
-            $job->prePersist();
             $manager->persist($job);
         }
 
@@ -110,7 +103,6 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
             $job->setActivated(true);
             $job->setToken('job_' . $i);
             $job->setEmail('job@example.com');
-            $job->prePersist();
             $manager->persist($job);
         }
 

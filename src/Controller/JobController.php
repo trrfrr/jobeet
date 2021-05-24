@@ -31,7 +31,6 @@ class JobController extends AbstractController
     public function create(Request $request, EntityManagerInterface $em): Response
     {
         $job = new Jobs();
-        $job->prePersist();
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
 

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * @ORM\Entity(repositoryClass=JobsRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Jobs
 {
@@ -316,7 +317,7 @@ class Jobs
         return $this;
     }
     /**
-     * @ORM\PrePersist()
+     * @ORM\PrePersist
      */
     public function prePersist(){
         $this->createdAt=new Datetime();
@@ -326,7 +327,7 @@ class Jobs
         }
     }
     /**
-     * @ORM\PreUpdate()
+     * @ORM\PreUpdate
      */
     public function preUpdate(){
         $this->updatedAt=new Datetime();
