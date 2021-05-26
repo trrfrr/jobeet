@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Form\JobType;
 use App\Repository\CategoryRepository;
+use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,13 +30,20 @@ class JobController extends AbstractController
     /**
      * @Route("/job/create", name="job.create")
      */
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function create(Request $request, EntityManagerInterface $em, FileUploader $fileUploader): Response
     {
         $job = new Jobs();
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $logoFile = $form->get('logo')->getData();
+            if ($logoFile instanceof UploadedFile) {
+                $fileName = $fileUploader->upload($logoFile);
+
+                $job->setLogo($fileName);
+            }
+
             $em->persist($job);
             $em->flush();
             return $this->redirectToRoute('homepage');

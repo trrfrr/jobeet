@@ -145,13 +145,14 @@ class Jobs
     /**
      * @return string|null|UploadedFile
      */
-    public function getLogo(): ?string
+    public function getLogo()
     {
         return $this->logo;
     }
 
     /**
      * @param string|null|UploadedFile $logo
+     *
      * @return self
      */
     public function setLogo(?string $logo): self
