@@ -7,6 +7,7 @@ use App\Repository\CategoryRepository;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +29,7 @@ class JobController extends AbstractController
     }
 
     /**
-     * @Route("/job/create", name="job.create")
+     * @Route("/job/create", name="job.create",methods={"GET", "POST"})
      */
     public function create(Request $request, EntityManagerInterface $em, FileUploader $fileUploader): Response
     {
@@ -40,7 +41,6 @@ class JobController extends AbstractController
             $logoFile = $form->get('logo')->getData();
             if ($logoFile instanceof UploadedFile) {
                 $fileName = $fileUploader->upload($logoFile);
-
                 $job->setLogo($fileName);
             }
 
@@ -49,6 +49,35 @@ class JobController extends AbstractController
             return $this->redirectToRoute('homepage');
         }
         return $this->render('job/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/job/{token}/edit", name="job.edit",methods={"GET", "POST"},requirements={"token" = "\w+"})
+     */
+    public function edit(Request $request, Jobs $jobs, EntityManagerInterface $em, FileUploader $fileUploader): Response
+    {
+        $oldFile= $jobs->getLogo();
+        $form = $this->createForm(JobType::class, $jobs);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $logoFile = $form->get('logo')->getData();
+            if (isset($logoFile)) {
+                if ($logoFile instanceof UploadedFile) {
+                    $fileName = $fileUploader->upload($logoFile);
+                    $jobs->setLogo($fileName);
+                }
+            }else{
+                $jobs->setLogo($oldFile);
+            }
+            $em->flush();
+
+            return $this->redirectToRoute('homepage');
+        }
+        return $this->render('job/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }

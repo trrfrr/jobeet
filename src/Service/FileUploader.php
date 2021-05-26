@@ -3,6 +3,8 @@
 
 namespace App\Service;
 
+use App\Entity\Jobs;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploader
@@ -17,6 +19,9 @@ class FileUploader
     {
         $this->targetDirectory = $targetDirectory;
     }
+
+
+
 
     /**
      * @return string
@@ -39,4 +44,7 @@ class FileUploader
 
         return $fileName;
     }
+
+
 }
+

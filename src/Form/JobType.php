@@ -43,6 +43,7 @@ class JobType extends AbstractType
             ])
             ->add('logo', FileType::class, [
                 'required' => false,
+                'data_class' => null,
                 'constraints' => [
                     new Image(),
                 ]
