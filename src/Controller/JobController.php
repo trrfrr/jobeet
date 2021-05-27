@@ -99,10 +99,42 @@ class JobController extends AbstractController
      */
     public function preview(Jobs $job): Response
     {
+        $deleteForm = $this->createDeleteForm($job);
         return $this->render('job/show.html.twig', [
             'controller_name' => 'JobController',
             'job' => $job,
             'hasControlAccess' => true,
+            'deleteForm'=>$deleteForm->createView()
         ]);
+    }
+    /**
+     * @Route("/job/{token}/delete", name="job.delete", methods="DELETE", requirements={"token" = "\w+"})
+     */
+    public function delete(Request $request,Jobs $job ,EntityManagerInterface $em): Response
+    {
+       $form =$this->createDeleteForm($job);
+       $form->handleRequest($request);
+
+       if($form->isSubmitted() && $form->isValid()){
+           $em->remove($job);
+           $em->flush();
+       }
+       return  $this->redirectToRoute('homepage');
+    }
+
+
+
+
+
+    /**
+     * @param Jobs $jobs
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteForm(Jobs $jobs){
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('job.delete',['token'=>$jobs->getToken()]))
+            ->setMethod('DELETE')
+            ->getForm();
+
     }
 }
