@@ -5,7 +5,7 @@
 
         <div class="card  mt-5 shadow p-3 mb-5 bg-white rounded border-top  border-primary">
             {% if hasControlAccess is defined and hasControlAccess %}
-                {% include 'job/control_panel.html.twig' with {'job': job} %}
+                {% include 'job/control_panel.html.twig' with {'job': job, 'deleteForm': deleteForm} %}
             {% endif %}
             {% if job.logo %}
                 <div class="text-center mt-0 ">
