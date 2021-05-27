@@ -65,10 +65,31 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
         $jobExpired->setEmail('job@example.com');
         $jobExpired->setCreatedAt(new \DateTime('-40 days'));
         $jobExpired->setUpdatedAt(new \DateTime('-40 days'));
-
         $jobExpired->setExpiresAt(new \DateTime('-10 days'));
 
+        $willExpire = new Jobs();
+        $willExpire->setCategory($manager->merge($this->getReference('category-programming')));
+        $willExpire->setType('full-time');
+        $willExpire->setCompany('Sensio Labs');
+        $willExpire->setLogo('sensio-labs.gif');
+        $willExpire->setUrl('http://www.sensiolabs.com/');
+        $willExpire->setPosition('Web Developer  will Expired');
+        $willExpire->setLocation('Paris, France');
+        $willExpire->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit.');
+        $willExpire->setHowToApply('Send your resume to lorem.ipsum [at] dolor.sit');
+        $willExpire->setPublic(true);
+        $willExpire->setActivated(true);
+        $willExpire->setToken('job_will_expire');
+        $willExpire->setEmail('job@example.com');
+        $willExpire->setCreatedAt(new \DateTime('-27 days'));
+        $willExpire->setUpdatedAt(new \DateTime('-27 days'));
+        $willExpire->setExpiresAt(new \DateTime('+3 days'));
 
+
+
+
+        $manager->persist($willExpire);
+        $manager->persist($jobExpired);
         $manager->persist($jobSensioLabs);
         $manager->persist($jobExtremeSensio);
 

@@ -46,7 +46,7 @@ class JobController extends AbstractController
 
             $em->persist($job);
             $em->flush();
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('job.preview', ['token' => $job->getToken()]);
         }
         return $this->render('job/create.html.twig', [
             'form' => $form->createView(),
@@ -75,7 +75,8 @@ class JobController extends AbstractController
             }
             $em->flush();
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('job.preview', ['token' => $jobs->getToken()]);
+
         }
         return $this->render('job/edit.html.twig', [
             'form' => $form->createView(),
@@ -83,13 +84,25 @@ class JobController extends AbstractController
     }
 
     /**
-     * @Route("/job/{id}", name="job.show")
+     * @Route("/job/{id}", name="job.show", methods="GET", requirements={"id" = "\d+"})
      */
     public function show(Jobs $job): Response
     {
         return $this->render('job/show.html.twig', [
             'controller_name' => 'JobController',
             'job' => $job,
+        ]);
+    }
+
+    /**
+     * @Route("/job/{token}", name="job.preview", methods="GET", requirements={"token" = "\w+"})
+     */
+    public function preview(Jobs $job): Response
+    {
+        return $this->render('job/show.html.twig', [
+            'controller_name' => 'JobController',
+            'job' => $job,
+            'hasControlAccess' => true,
         ]);
     }
 }

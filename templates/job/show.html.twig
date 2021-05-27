@@ -3,18 +3,22 @@
 {% block body %}
     <div class="container">
 
-        <div class="card p-5 mt-5 shadow p-3 mb-5 bg-white rounded border-top  border-primary" >
+        <div class="card  mt-5 shadow p-3 mb-5 bg-white rounded border-top  border-primary">
+            {% if hasControlAccess is defined and hasControlAccess %}
+                {% include 'job/control_panel.html.twig' with {'job': job} %}
+            {% endif %}
+            {% if job.logo %}
+                <div class="text-center mt-0 ">
+                    <a href="{{ job.url }}" target="_blank">
+                        <img class="rounded shadow " style="width:200px; height:100px;"
+                             src="{{ asset(jobs_web_directory ~ '/' ~ job.logo) }}">
+                    </a>
+                </div>
+            {% endif %}
 
-
-            <h1 class="media-heading">Job</h1>
+            <h1 class="media-heading ">Job</h1>
             <div class="media" style="margin-top: 60px;">
-                {% if job.logo %}
-                    <div class="media-left">
-                        <a href="{{ job.url }}" target="_blank">
-                            <img class="media-object" style="width:100px; height:100px;" src="{{ asset(jobs_web_directory ~ '/' ~ job.logo) }}">
-                        </a>
-                    </div>
-                {% endif %}
+
 
                 <div class="media-body">
                     <div class="row">
@@ -49,10 +53,10 @@
                                 Back to list
                             </a>
 
-                            <a class="btn btn-primary" href="{{ path('job.edit', {token: job.token}) }}">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                Edit
-                            </a>
+                            {#                            <a class="btn btn-primary" href="{{ path('job.edit', {token: job.token}) }}">#}
+                            {#                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>#}
+                            {#                                Edit#}
+                            {#                            </a>#}
                         </div>
                     </div>
                 </div>
